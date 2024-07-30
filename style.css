@@ -110,3 +110,23 @@ body{
     75% { transform: translateX(2px); }
     100% { transform: translateX(0); }
   }
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+    .button a {
+        font-size: 28px;
+        padding: 15px 30px;
+    }
+}
+@media (max-width: 480px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+    .button a {
+        font-size: 24px;
+        padding: 10px 20px;
+    }
+}
