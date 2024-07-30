@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GC Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <video id="background-video" loop autoplay muted>
+        <source src="bgvideo.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+        <p>Enter Your Name: </p>
+        <input type="text" placeholder="Name">
+        <p>Enter Your Sap id: </p>
+        <input type="number" placeholder="Sap id" id="qrSap">
+        <p>Enter Your Email id: </p>
+        <input type="email" placeholder="ABC@gmail.com">
+        <div id="imgBox">
+            <img src="" id="qrImage">
+        </div>
+        <div onclick="generateQR()">
+            <div class="button">
+              <a>Submit</a>
+            </div>
+          </div>
+    </div>
+    <script>
+let imgbox = document.getElementById("imgbox");
+let qrImage = document.getElementById("qrImage");
+let qrSap = document.getElementById("qrSap");
+
+function generateQR(){
+    if(qrSap.value.length==11){
+        qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrSap.value; 
+        imgbox.classList.add("show-img");
+    }
+    else{
+        qrSap.classList.add('error')
+        setTimeout(()=>{
+            qrSap.classList.remove('error')
+        },1000)
+    }
+}
+    </script>
+</body>
+</html>
