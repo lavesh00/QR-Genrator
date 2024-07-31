@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scanner</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="html5-qrcode.min.js"></script>
+    <style>
+        .result {
+            background-color: green;
+            color: #fff;
+            padding: 20px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .col {
+            flex: 1;
+        }
+        .error-message {
+            color: red;
+        }
+        .rescan-button {
+            background-color: #FC466B;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .rescan-button:hover {
+            background-color: #FC466B;
+        }
+        #reader {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .button-container button {
+            padding: 5px 10px;
+            font-size: 12px;
+            width: 150px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <video id="background-video" loop autoplay muted>
+        <source src="bgvideo.mp4" type="video/mp4">
+    </video>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"> 
+    
+    <div class="button-container">
+        <button id="request-camera-permissions">Request Camera Permissions</button>
+        <button id="scan-image-file">Scan an Image File</button>
+    </div>
+    
+    <div class="container">
+        <form id="form">
+            <p>Welcome</p>
+            <div class="row">
+                <div class="col">
+                    <div id="reader"></div>
+                </div>
+                <div class="col" style="padding: 30px;">
+                    <h4>SCAN RESULT</h4>
+                    <div id="result">Result Here</div>
+                    <div id="error-message" class="error-message"></div>
+                    <button id="rescan-button" class="rescan-button" style="display: none;">Rescan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        function onScanSuccess(qrCodeMessage) {
+            document.getElementById('result').innerHTML = '<span class="result">' + qrCodeMessage + '</span>';
+            document.getElementById('error-message').innerHTML = '';
+            document.getElementById('rescan-button').style.display = 'none';
+        }
+
+        function onScanError(errorMessage) {
+            document.getElementById('error-message').innerHTML = 'Error: ' + errorMessage;
+            document.getElementById('rescan-button').style.display = 'block';
+        }
+
+        document.getElementById('rescan-button').addEventListener('click', function() {
+            html5QrcodeScanner.clear();
+            document.getElementById('error-message').innerHTML = '';
+            document.getElementById('rescan-button').style.display = 'none';
+            html5QrcodeScanner.render(onScanSuccess, onScanError);
+        });
+
+        var html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess, onScanError);
+
+        document.getElementById('request-camera-permissions').addEventListener('click', function() {
+            html5QrcodeScanner.render(onScanSuccess, onScanError);
+        });
+
+        document.getElementById('scan-image-file').addEventListener('click', function() {
+            // Implement image file scanning functionality here
+        });
+    </script>
+</body>
+</html>
